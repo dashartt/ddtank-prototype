@@ -7,11 +7,18 @@ public class StaminaController : MonoBehaviour
 {
     [SerializeField]
     private Slider slider;
+    private float staminaValue;
+    enum STAMINA_BAR
+    {
+        MAX = 100,
+        MIN = 0,
+    }
+
     // Start is called before the first frame update
     void Start()
-    {
-        slider = GetComponent<Slider>();
-       
+    { 
+        slider.value = 1;
+        staminaValue = ChangeStaminaBarValue(slider.value);        
     }
 
     // Update is called once per frame
@@ -19,4 +26,9 @@ public class StaminaController : MonoBehaviour
     {
         
     }
+
+    public float ChangeStaminaBarValue(float incomingValue)
+    {
+        return ((staminaValue) * 100) + incomingValue;
+    }    
 }
