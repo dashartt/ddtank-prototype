@@ -12,24 +12,23 @@ public class BulletController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Damageable") )
         {
-            Debug.Log("Bounds contain the point : ");
             system.PassRound();
             Destroy(gameObject, 0.1f);
         }
     }
 
-    public void OnDestroy()
-    {
+    //public void OnDestroy()
+    //{
 
-        Vector2 explosionPos = new Vector2(transform.position.x, transform.position.y);
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, (float)explosionRadius / 100);
+    //    Vector2 explosionPos = new Vector2(transform.position.x, transform.position.y);
+    //    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, (float)explosionRadius / 100);
 
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            // TODO: two calls for getcomponent is bad
-            if (colliders[i].GetComponent<DestructibleSprite>())
-                colliders[i].GetComponent<DestructibleSprite>().ApplyDamage(explosionPos, explosionRadius);
-        }
-    }
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        // TODO: two calls for getcomponent is bad
+    //        if (colliders[i].GetComponent<DestructibleSprite>())
+    //            colliders[i].GetComponent<DestructibleSprite>().ApplyDamage(explosionPos, explosionRadius);
+    //    }
+    //}
 
 }

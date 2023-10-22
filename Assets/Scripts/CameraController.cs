@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour
         {
             GameObject player = system.currentPlayer;
             transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
-
         }                              
     }
 }

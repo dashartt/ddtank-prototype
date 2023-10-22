@@ -20,15 +20,15 @@ public class PlayerController : MonoBehaviour
     public float bulletSpeed = 10;
 
     private BarForceController barForce;
-    private LifeBarController lifeBar;
+    private HealthBarController healthBar;
     private StaminaController stamina;
     private SystemController system;
     
     void Start()
     {
-        angle = GetComponentInChildren<Transform>();
+        angle = GetComponentInChildren<Transform>().GetChild(0).transform;
         stamina = GetComponent<StaminaController>();
-        lifeBar = GetComponent<LifeBarController>();
+        healthBar = GetComponent<HealthBarController>();
         barForce = GetComponent<BarForceController>();
     }
 
@@ -37,8 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMoviment();
         ChangeShootingAngle();
-        BarForceController();
-        AttackRosources();
+        BarForceController(); 
         UtilitiesResources();   
     }
 
@@ -68,14 +67,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {            
             barForce.ResetForceBarValue();
-            //matchControll.timer.enabled = false;            
+            system.timer.enabled = false;            
             ThrowBullet();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             system.timer.enabled = false;
-            //matchControll.StopCoroutine("RoundTimer");
-            //matchControll.canStartRoundTimer = false;
+            system.timer.StartCoroutine("StartTimer");            
+            system.canStartRoundTimer = false;
         }
     }
 
@@ -83,41 +82,24 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            //matchControll.PassRound();
+            system.PassRound();
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            lifeBar.ChangeValue(0.10f);
+            healthBar.ChangeHealthValue(25);
         }
     }
-
-    void AttackRosources()
-    {
-        
-    }
-
     void ThrowBullet()
     {
-        //GameObject bullet = Instantiate(bulletPrefab, spawnBullet.position, aim.rotation);        
-        //bullet.GetComponent<Rigidbody2D>().velocity = spawnBullet.up * bulletSpeed * barForce.lastForce;
-        //StartCoroutine(IgnoreSelfCollision(1f, bullet));
-    }
-
-    void Stamina()
-    {
-        //if (transform.position)
-    }
-
+        GameObject bullet = Instantiate(bulletPrefab, spawnBullet.position, angle.rotation);        
+        bullet.GetComponent<Rigidbody2D>().velocity = spawnBullet.up * bulletSpeed * barForce.lastForce;
+        StartCoroutine(IgnoreSelfCollision(1f, bullet));
+    } 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Damageable") || collision.gameObject.CompareTag("Player"))
         {            
-            lifeBar.ChangeValue(-1f);
-
-            if (lifeBar.GetComponent<Slider>().value == 0)
-            {
-                //matchControll.isMatchOver = true;
-            }
+            healthBar.ChangeHealthValue(-10);
         }
     }
 

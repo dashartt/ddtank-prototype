@@ -13,7 +13,7 @@ public class SystemController : MonoBehaviour
     public List<GameObject> teamBlue;
     string[] teams = new string[] { "RED", "BLUE" };
 
-    public Text timer;
+    public TimerController timer;
     private int roundTime = 10;
     public bool canStartRoundTimer = false;
     public Coroutine timerCoroutine;
@@ -26,7 +26,7 @@ public class SystemController : MonoBehaviour
 
     private void Start()
     {
-        timer = GetComponent<Text>();
+        timer = GetComponent<TimerController>();
         PreStartGame();            
     }
 
@@ -74,30 +74,7 @@ public class SystemController : MonoBehaviour
         //Start first round
         canNextRound = true;
     }
-    
-    IEnumerator RoundTimer()
-    {
-        canNextRound = false;
-
-        timer.enabled = true;
-        roundTime = 10;
-        timer.text = roundTime.ToString(); 
-
-        while (roundTime != -1)
-        {
-            timer.text = roundTime.ToString();
-            roundTime--;
-            yield return new WaitForSeconds(1f);
-        }            
-                 
-        PassRound();        
-    }
-    void ResetRoundTimer()
-    {
-        //system.timer.enabled = false;
-        //matchControll.StopCoroutine("RoundTimer");
-        //matchControll.canStartRoundTimer = false;
-    }
+   
     public void PassRound()
     {
         //Hide timer
