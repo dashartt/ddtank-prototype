@@ -7,6 +7,8 @@ TagManager:
   - Damageable
   - BarForce
   - Timer
+  - HealthBar
+  - Stamina
   layers:
   - Default
   - TransparentFX

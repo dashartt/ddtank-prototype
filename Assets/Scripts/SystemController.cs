@@ -82,12 +82,15 @@ public class SystemController : MonoBehaviour
         timer.enabled = false;
 
         //Enable havedPlayed var
-        PlayerController playerControll = currentPlayer.GetComponent<PlayerController>();
-        playerControll.havePlayed = true; 
+        if (currentPlayer)
+        {
+            PlayerController playerControll = currentPlayer.GetComponent<PlayerController>();
+            playerControll.havePlayed = true;
 
-        //Change team        
-        currentTeam = currentTeam == "BLUE" ? "RED" : "BLUE";
-        canNextRound = true;
+            //Change team        
+            currentTeam = currentTeam == "BLUE" ? "RED" : "BLUE";
+            canNextRound = true;
+        } 
     }
     void FindNextPlayerTeamRed()
     {

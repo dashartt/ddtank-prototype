@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class BarForceController : MonoBehaviour
 {
+    [SerializeField]
+    private Slider slider;
     private float forceValue;
     enum FORCE_BAR {
         MAX = 100,
@@ -14,8 +16,8 @@ public class BarForceController : MonoBehaviour
     bool isFillForward = false;
 
     private void Start()
-    {
-        forceValue = ChangeForceBarValue(GetComponent<Slider>().value);
+    {  
+        forceValue = ChangeForceBarValue(slider.value);        
     }
   
     private float ChangeForceBarValue(float incomingValue)
