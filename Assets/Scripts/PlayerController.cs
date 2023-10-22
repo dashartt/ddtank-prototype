@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     public float shootForce = 0;
     public float bulletSpeed = 10;
 
-    private BarForceController barForce;
+    private ForceBarController forceBar;
     private HealthBarController healthBar;
-    private StaminaController stamina;
+    private StaminaController staminaBar;
     private SystemController system;
     
     void Start()
@@ -29,29 +29,32 @@ public class PlayerController : MonoBehaviour
         system = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SystemController>();
         angle = GetComponentInChildren<Transform>().GetChild(0).transform;        
         healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBarController>();
-        barForce = GameObject.FindGameObjectWithTag("BarForce").GetComponent<BarForceController>();
-        stamina = GameObject.FindGameObjectWithTag("Stamina").GetComponent<StaminaController>();
+        forceBar = GameObject.FindGameObjectWithTag("BarForce").GetComponent<ForceBarController>();
+        staminaBar = GameObject.FindGameObjectWithTag("Stamina").GetComponent<StaminaController>();
     }
 
 
     void Update()
     {
         PlayerMoviment();
-        ChangeShootingAngle();
+        ShootingAngleController();
         BarForceController(); 
         UtilitiesResources();   
     }
 
     void PlayerMoviment()
     {
-        void Move(float playerSpeed) { transform.Translate(playerSpeed * Time.deltaTime, 0f, 0f); }
+        void ConsumeStamina(float cost) { staminaBar.ChangeStaminaBarValue(cost);  }
+        void Move(float playerSpeed) { 
+            transform.Translate(playerSpeed * Time.deltaTime, 0f, 0f);
+            transform.Translate(new Vector3(0, 180, 0));
+        }        
 
-
-        if (Input.GetKey(KeyCode.LeftArrow)) { Move(-playerSpeed); }
-        if (Input.GetKey(KeyCode.RightArrow)) { Move(playerSpeed); }
+        if (Input.GetKey(KeyCode.LeftArrow)) { Move(-playerSpeed); ConsumeStamina(playerSpeed); }
+        if (Input.GetKey(KeyCode.RightArrow)) { Move(playerSpeed); ConsumeStamina(playerSpeed); }
     }
 
-    void ChangeShootingAngle()
+    void ShootingAngleController()
     {
         void SetAngle(int value) { angle.Rotate(new Vector3(0, 0, Time.deltaTime * value)); }
 
@@ -63,19 +66,19 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            barForce.ChangeShotForce();
+            forceBar.ChangeShotForce();
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {            
-            barForce.ResetForceBarValue();
+            forceBar.ResetForceBarValue();
             system.timer.enabled = false;            
             ThrowBullet();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             system.timer.enabled = false;
-            system.timer.StartCoroutine("StartTimer");            
             system.canStartRoundTimer = false;
+            system.timer.StopCoroutine("StartTimer");            
         }
     }
 
@@ -84,23 +87,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             system.PassRound();
+            staminaBar.ChangeStaminaBarValue(100);
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            healthBar.ChangeHealthValue(25);
+            healthBar.ChangeHealthBarValue(25);
+            staminaBar.ChangeStaminaBarValue(-25);
         }
     }
     void ThrowBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, spawnBullet.position, angle.rotation);        
-        bullet.GetComponent<Rigidbody2D>().velocity = spawnBullet.up * bulletSpeed * barForce.lastForce;
+        bullet.GetComponent<Rigidbody2D>().velocity = spawnBullet.up * bulletSpeed * forceBar.lastForce;
         //StartCoroutine(IgnoreSelfCollision(1f, bullet));
     } 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Damageable") || collision.gameObject.CompareTag("Player"))
         {            
-            healthBar.ChangeHealthValue(-10);
+            healthBar.ChangeHealthBarValue(-10);
         }
     }
 

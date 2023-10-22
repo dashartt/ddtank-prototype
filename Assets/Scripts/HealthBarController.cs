@@ -14,17 +14,14 @@ public class HealthBarController : MonoBehaviour
 
     private void Start()
     {
-        healthValue = GetComponent<Slider>().value;   
+        healthValue = 1;
+        healthValue = ChangeHealthBarValue(healthValue);
     }
 
-    private float ChangeHealthBar(float incomingValue)
+    public float ChangeHealthBarValue(float incomingValue)
     {
         return ((healthValue) * 100) + incomingValue;
-    }
-    public void ChangeHealthValue(float incomingValue)
-    {
-        healthValue = ChangeHealthBar(incomingValue);
-    }
+    } 
 
 
 }
