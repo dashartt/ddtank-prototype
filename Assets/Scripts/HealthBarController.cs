@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
+    [SerializeField]
+    private Slider slider;
     private float healthValue = 100;
     enum HEALTH_BAR_VALUE
     {

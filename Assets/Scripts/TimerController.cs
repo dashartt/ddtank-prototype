@@ -5,22 +5,16 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
+    [SerializeField]
     private Text timer;
-    public bool isMatchOver = false;
-    public GameObject playerPrefab;
-    public List<GameObject> teamRed;
-    public List<GameObject> teamBlue;
-    string[] teams = new string[] { "RED", "BLUE" };
-    
+    [SerializeField]
+    private SystemController system;
+
     private int roundTime = 10;
     public bool canStartRoundTimer = false;
-    public Coroutine timerCoroutine;
-
-    public string currentTeam;
-    public GameObject currentPlayer;
-
+    public Coroutine timerCoroutine; 
     private bool canPassTurn = false;
-    private SystemController system;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +43,7 @@ public class TimerController : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        system.PassRound();
+        //system.PassRound();
     }
 
     void ResetRoundTimer()

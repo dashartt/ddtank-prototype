@@ -26,10 +26,11 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        angle = GetComponentInChildren<Transform>().GetChild(0).transform;
-        stamina = GetComponent<StaminaController>();
-        healthBar = GetComponent<HealthBarController>();
-        barForce = GetComponent<BarForceController>();
+        system = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SystemController>();
+        angle = GetComponentInChildren<Transform>().GetChild(0).transform;        
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBarController>();
+        barForce = GameObject.FindGameObjectWithTag("BarForce").GetComponent<BarForceController>();
+        stamina = GameObject.FindGameObjectWithTag("Stamina").GetComponent<StaminaController>();
     }
 
 
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, spawnBullet.position, angle.rotation);        
         bullet.GetComponent<Rigidbody2D>().velocity = spawnBullet.up * bulletSpeed * barForce.lastForce;
-        StartCoroutine(IgnoreSelfCollision(1f, bullet));
+        //StartCoroutine(IgnoreSelfCollision(1f, bullet));
     } 
     void OnCollisionEnter2D(Collision2D collision)
     {
