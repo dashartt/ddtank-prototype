@@ -23,6 +23,11 @@
 .vs/
 .vscode/
 
+# Photon files
+/Assets/Photon/**
+**/Assets/Photon/**
+
+
 # Gradle cache directory
 .gradle/
 
