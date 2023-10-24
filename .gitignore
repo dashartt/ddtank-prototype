@@ -24,10 +24,10 @@
 .vscode/
 
 # Photon files
-**/Assets/Photon/PhotonUnityNetworking/Demo
-**/Assets/Photon/PhotonUnityNetworking/PhotonRealtime/Demo
-**/Assets/Photon/PhotonUnityNetworking/PhotonLibs/Demo
-**/Assets/Photon/PhotonUnityNetworking/PhotonChat/Demo
+Assets/Photon/PhotonUnityNetworking/Demo
+Assets/Photon/PhotonUnityNetworking/PhotonRealtime/Demo
+Assets/Photon/PhotonUnityNetworking/PhotonLibs/Demo
+Assets/Photon/PhotonUnityNetworking/PhotonChat/Demo
 
 # Gradle cache directory
 .gradle/
