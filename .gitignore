@@ -23,11 +23,6 @@
 .vs/
 .vscode/
 
-# Photon files
-Assets/Photon/PhotonUnityNetworking/**
-/Assets/Photon/PhotonUnityNetworking/**
-**/Assets/Photon/PhotonUnityNetworking/**
-
 # Gradle cache directory
 .gradle/
 
